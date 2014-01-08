@@ -6,5 +6,5 @@
  * and DS18B20
 
 ##Usage
- (sudo) python read.py  
- Then go to your local couchdb installation to db/_design/temperature/index.html or create your own rewrite rules
+ `(sudo) python read.py`  
+ Then go to your local couchdb installation to `db/_design/temperature/index.html` or create your own rewrite rules. Rewrite your db to your db name to keep things working.
