@@ -41,11 +41,11 @@ $(function() {
 
       var gaugeOptions = {
         min: 0,
-        max: 3000,
-        yellowFrom: 1000,
-        yellowTo: 1800,
-        redFrom: 1800,
-        redTo: 3000,
+        max: 100,
+        yellowFrom: 30,
+        yellowTo: 50,
+        redFrom: 50,
+        redTo: 100,
         minorTicks: 5,
         width:150,
         height:150,
