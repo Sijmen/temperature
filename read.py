@@ -32,6 +32,6 @@ for sensor in sensorids:
 		document = {"sensor_id":sensor,"temperature":temperature,"time":int(round(time.time()*1000))}
                 db.save(document)
                 temperatures.append(temperature)
-		time.sleep(1)
+		time.sleep(30)
 	
 

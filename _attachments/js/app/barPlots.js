@@ -358,7 +358,7 @@ function BarPlot(elementID,oDB,sDesign){
                 vCleanGraphData('Temperature');
                 iLastChange = data.last_seq;
                 $.each(data.rows,function(key,value){
-                    graphData.addRows([[new Date(value.key),Math.round(value.value.temp),0]]);
+                    graphData.addRows([[new Date(value.key),Math.round(value.value.temp*100)/100,0]]);
                 });
                 $('#'+elementID).html('');
                 chart.draw(graphData,oBarOptions);
