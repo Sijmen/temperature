@@ -22,7 +22,7 @@ $(function() {
     var historyChart;
     var barPlot = new BarPlot('history_chart_div',oDB,'temperature');
     barPlot.vSetGraphType('line');
-    var livePlot = new LivePlot('chart_div',oDB,undefined,'temperature');
+    var livePlot = new LivePlot('chart_div',oDB,3600*24,'temperature');
     var generalOptions = {
                             curveType: "function",
                             height:300,

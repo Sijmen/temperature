@@ -10,7 +10,7 @@ function LivePlot(elementID,oDB,iTimeSpan,sDesign){
     var oChart = new google.visualization.LineChart(document.getElementById(elementID));
     var oDataTable = new google.visualization.DataTable();
     var oDataView;
-    var powerLabel = 'Power (W)';
+    var sLabel = 'Temperature (C)'
     var oDataOptions;
     var graphData;
     var bChangesRunning = false;
@@ -22,8 +22,9 @@ function LivePlot(elementID,oDB,iTimeSpan,sDesign){
     var oGaugeData = {};
     var oChangeHandler = {};
     if(typeof iTimeSpan === 'undefined')
-      iTimeSpan = 300*1000;
-
+      iTimeSpan = 300;
+    iTimeSpan = iTimeSpan*1000;
+    
     this.vStart = function(){
       init();
     };
@@ -70,7 +71,7 @@ function LivePlot(elementID,oDB,iTimeSpan,sDesign){
       iLast = iNow - iTimeSpan;
       oDataTable = new google.visualization.DataTable();
       oDataTable.addColumn('datetime', 'Date');
-      oDataTable.addColumn('number', powerLabel);
+      oDataTable.addColumn('number', sLabel);
       oDataView = new google.visualization.DataView(oDataTable);
       oDB.view(sDesign + "/time", {
             startkey:iLast,
