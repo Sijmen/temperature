@@ -2,7 +2,7 @@ import time
 import couchdb
 
 #settings
-server_url = 'http://localhost:8080/'
+server_url = 'http://localhost:5984/'
 dbname = 'temperature'
 
 couch = couchdb.Server(server_url)
@@ -14,7 +14,7 @@ for sensor in sensorids:
 #        for polltime in range(0,3):
 		text = ''
 		# Read until the check is successful
-                while text.split("\n")[0].find("YES") == -1:			
+                while text.split("\n")[0].find("YES") == -1:
 			tfile = open("/sys/bus/w1/devices/%s/w1_slave" % sensor)
         	        # Read all of the text in the file.
 	                text = tfile.read()
@@ -32,6 +32,6 @@ for sensor in sensorids:
 		document = {"sensor_id":sensor,"temperature":temperature,"time":int(round(time.time()*1000))}
                 db.save(document)
                 temperatures.append(temperature)
-		time.sleep(30)
-	
+		time.sleep(60)
+
 
