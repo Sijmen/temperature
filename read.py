@@ -7,7 +7,7 @@ dbname = 'temperature'
 
 couch = couchdb.Server(server_url)
 db = couch[dbname]
-sensorids = ["28-0000053bccc5"]
+sensorids = ["28-0000053b9dd6"]
 for sensor in sensorids:
 	temperatures = []
 	while True:
