@@ -135,7 +135,7 @@ function LivePlot(elementID,oDB,iTimeSpan,sDesign){
     }
 
     function vDrawGauge(oDoc){
-        var myTemp = Math.round(oDoc.temperature * 10) / 10);
+        var myTemp = Math.round(oDoc.temperature * 10) / 10;
         console.log(myTemp);
         oGaugeData.setValue(0,1,myTemp);
         oGauge.draw(oGaugeData,oGaugeOptions);
