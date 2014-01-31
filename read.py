@@ -2,7 +2,7 @@ import time
 import couchdb
 
 #settings
-server_url = 'http://localhost:5984/'
+server_url = 'http://ndw:ndw@localhost:5984/'
 dbname = 'temperature'
 
 couch = couchdb.Server(server_url)
@@ -31,4 +31,4 @@ for sensor in sensorids:
 		document = {"sensor_id":sensor,"temperature":temperature,"time":int(round(time.time()*1000))}
 		db.save(document)
 		temperatures.append(temperature)
-		time.sleep(60)
+		time.sleep(25)
