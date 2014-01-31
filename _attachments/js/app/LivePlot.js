@@ -10,7 +10,7 @@ function LivePlot(elementID,oDB,iTimeSpan,sDesign){
     var oChart = new google.visualization.LineChart(document.getElementById(elementID));
     var oDataTable = new google.visualization.DataTable();
     var oDataView;
-    var sLabel = 'Temperature (C)'
+    var sLabel = 'Temperature (C)';
     var oDataOptions;
     var graphData;
     var bChangesRunning = false;
@@ -24,7 +24,7 @@ function LivePlot(elementID,oDB,iTimeSpan,sDesign){
     if(typeof iTimeSpan === 'undefined')
       iTimeSpan = 300;
     iTimeSpan = iTimeSpan*1000;
-    
+
     this.vStart = function(){
       init();
     };
@@ -66,20 +66,19 @@ function LivePlot(elementID,oDB,iTimeSpan,sDesign){
     };
 
     function init(){
-      iNow = new Date().getTime();
-      iNow = Math.round(iNow);
-      iLast = iNow - iTimeSpan;
-      oDataTable = new google.visualization.DataTable();
-      oDataTable.addColumn('datetime', 'Date');
-      oDataTable.addColumn('number', sLabel);
-      oDataView = new google.visualization.DataView(oDataTable);
-      oDB.view(sDesign + "/time", {
+        iNow = new Date().getTime();
+        iNow = Math.round(iNow);
+        iLast = iNow - iTimeSpan;
+        oDataTable = new google.visualization.DataTable();
+        oDataTable.addColumn('datetime', 'Date');
+        oDataTable.addColumn('number', sLabel);
+        oDataView = new google.visualization.DataView(oDataTable);
+        oDB.view(sDesign + "/time", {
             startkey:iLast,
             endkey:iNow,
             reduce:false,
             update_seq : true,
             success : function(data) {
-                // console.log(data);
                 iLastChange = data.last_seq;
                 $.each(data.rows,function(key,value){
                     oDataTable.addRows([[new Date(value.key),value.value.temp]]);
@@ -89,13 +88,38 @@ function LivePlot(elementID,oDB,iTimeSpan,sDesign){
                 vSetupChanges(iLastChange);
             }
         });
+
+        // get
+        $.couch.db(oDB.name).info({
+            success: function(data) {
+                recentUpdateSeq = data.update_seq-5;
+
+                var options = {
+                    "feed":"normal",
+                    "since":recentUpdateSeq,
+                    "filter":"temperature/measurement",
+                    "include_docs":true
+                };
+                $.getJSON("/_db/_changes?"+
+                    decodeURIComponent($.param(options)), function(data) {
+                    if (data.results.length) {
+                        // get latest measurement doc from result set
+                        var oDoc = data.results[data.results.length-1].doc;
+
+                        // draw most recent temperature
+                        vDrawGauge(oDoc);
+                    }
+
+                });
+            }
+        });
     }
 
     function drawItems(resp) {
         if(typeof resp !== 'undefined'){
             $.each(resp.results,function(key,value){
-                if( typeof value.doc !== 'undefined' && 
-                    typeof value.doc.time !== 'undefined') 
+                if( typeof value.doc !== 'undefined' &&
+                    typeof value.doc.time !== 'undefined')
                 {
                     vReceiveResult(value.doc);
                 }
@@ -125,7 +149,7 @@ function LivePlot(elementID,oDB,iTimeSpan,sDesign){
         vDrawLineChart();
     }
 
-     function vDrawLineChart(){
+    function vDrawLineChart(){
         iNow = new Date().getTime();
         iLast = iNow - iTimeSpan;
         aFilter = [{column: 0, minValue: new Date(iLast), maxValue: new Date(iNow)}];
@@ -135,7 +159,8 @@ function LivePlot(elementID,oDB,iTimeSpan,sDesign){
     }
 
     function vDrawGauge(oDoc){
-        oGaugeData.setValue(0,1,Math.round(oDoc.temperature));
+        var fTemp = Math.round(oDoc.temperature * 10) / 10;
+        oGaugeData.setValue(0,1,fTemp);
         oGauge.draw(oGaugeData,oGaugeOptions);
     }
 }
