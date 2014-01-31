@@ -10,7 +10,7 @@ function LivePlot(elementID,oDB,iTimeSpan,sDesign){
     var oChart = new google.visualization.LineChart(document.getElementById(elementID));
     var oDataTable = new google.visualization.DataTable();
     var oDataView;
-    var sLabel = 'Temperature (C)'
+    var sLabel = 'Temperature (C)';
     var oDataOptions;
     var graphData;
     var bChangesRunning = false;
@@ -24,7 +24,7 @@ function LivePlot(elementID,oDB,iTimeSpan,sDesign){
     if(typeof iTimeSpan === 'undefined')
       iTimeSpan = 300;
     iTimeSpan = iTimeSpan*1000;
-    
+
     this.vStart = function(){
       init();
     };
@@ -94,8 +94,8 @@ function LivePlot(elementID,oDB,iTimeSpan,sDesign){
     function drawItems(resp) {
         if(typeof resp !== 'undefined'){
             $.each(resp.results,function(key,value){
-                if( typeof value.doc !== 'undefined' && 
-                    typeof value.doc.time !== 'undefined') 
+                if( typeof value.doc !== 'undefined' &&
+                    typeof value.doc.time !== 'undefined')
                 {
                     vReceiveResult(value.doc);
                 }
@@ -135,7 +135,9 @@ function LivePlot(elementID,oDB,iTimeSpan,sDesign){
     }
 
     function vDrawGauge(oDoc){
-        oGaugeData.setValue(0,1,Math.round(oDoc.temperature));
+        var myTemp = Math.round(oDoc.temperature * 10) / 10);
+        console.log(myTemp);
+        oGaugeData.setValue(0,1,myTemp);
         oGauge.draw(oGaugeData,oGaugeOptions);
     }
 }
