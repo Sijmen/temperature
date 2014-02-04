@@ -100,7 +100,7 @@ function LivePlot(elementID,oDB,iTimeSpan,sDesign){
                     "filter":"temperature/measurement",
                     "include_docs":true
                 };
-                $.getJSON("/_db/_changes?"+
+                $.getJSON("/"+oDB.name+"/_changes?"+
                     decodeURIComponent($.param(options)), function(data) {
                     if (data.results.length) {
                         // get latest measurement doc from result set
