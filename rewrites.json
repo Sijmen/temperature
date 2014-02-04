@@ -45,10 +45,5 @@
   {
     "from": "/*",
     "to": "index.html"
-<<<<<<< HEAD
-  },
-=======
   }
->>>>>>> sijmenTemperature/master
-
 ]
