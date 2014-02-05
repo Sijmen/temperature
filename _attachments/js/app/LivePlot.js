@@ -95,10 +95,10 @@ function LivePlot(elementID,oDB,iTimeSpan,sDesign){
                 recentUpdateSeq = data.update_seq-5;
 
                 var options = {
-                    "feed":"normal",
-                    "since":recentUpdateSeq,
-                    "filter":"temperature/measurement",
-                    "include_docs":true
+                    feed:"normal",
+                    since:recentUpdateSeq,
+                    filter:"temperature/measurement",
+                    include_docs:true
                 };
                 $.getJSON("/"+oDB.name+"/_changes?"+
                     decodeURIComponent($.param(options)), function(data) {

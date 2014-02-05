@@ -1,98 +1,33 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Overzicht energieverbruik</title>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-    <!--Load the AJAX API-->
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <!-- // <script type="text/javascript" src="drawGraph.js"></script> -->
-    <script type="text/javascript">
-      google.load('visualization', '1.0', {'packages':['corechart','gauge']});
-      // google.setOnLoadCallback(init);
-    </script>
-    <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="css/app.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/jquery-ui-timepicker-addon.css">
-  </head>
-  <body>
-    <div class="container-narrow">
-      <div class="masthead">
-        <ul class="nav nav-pills pull-right">
-          <li class="active"><a data-toggle="tab" href="#chart_div">Live</a></li>
-          <li><a data-toggle="tab" href="#overview">Overzicht</a></li>
-          <li><a data-toggle="tab" href="#history">Historie</a></li>
-          <!-- <li><a href="#">Contact</a></li> -->
-        </ul>
-        <h3 class="muted">Energieoverzicht</h3>
-      </div>
-      <hr>
-      <div class="row-fluid marketing">
-        <div class="span12">
-          <div class="tab-content">
-            <div class="tab-pane" id="history"><div id="history_chart_div"></div></div>
-            <div class="tab-pane active" id="chart_div"></div>
-            <div class="tab-pane active" id="overview">
-              <div><div id="hour_div"></div></div>
-              <div><div id="day_div"></div></div>
-              <div><div id="month_div"></div></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <hr>
-      <div class="row-fluid marketing">
-        <div class="span6">
-          <div id="gauge"></div>
-        </div>
-        <div class="span6">
-          <div id="datetime_select">
-            <div>
-              <label>Start datum/tijd</label>
-              <input type="text" id="datepickerstart">
-            </div>
-            <div>
-              <label>Eind datum/tijd</label>
-              <input type="text" id="datepickerend">
-            </div>
-            <div>
-              <label>Resolutie</label>
-              <select id="graph_type">
-                <option value="0">Kies een optie</option>
-                <option value="1">Jaar</option>
-                <option value="2">Maand</option>
-                <option value="3">Dag</option>
-                <option value="4">Uur</option>
-                <option value="5">Minuut (gemiddeld)</option>
-                <option value="6">Alle meetpunten</option>
-              </select>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <hr>
-
-      <div class="footer">
-        <p>&copy; Sijmen Hoogendijk 2013</p>
-      </div>
-
-    </div> <!-- /container -->
-
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-    <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
-    <script src="js/libs/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/libs/jquery.couch.js"></script>
-    <script type="text/javascript" src="js/libs/jquery-ui-timepicker-addon.js"></script>
-    <script type="text/javascript" src="js/app/barPlots.js"></script>
-    <script type="text/javascript" src="js/app/LivePlot.js"></script>
-    <script type="text/javascript" src="js/local/app.js"></script>
-
-  </body>
-    <!--Div that will hold the pie chart-->
-  </body>
+	<head>
+	<title>Overzicht</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/colors.min.css" rel="stylesheet">
+	<link href="css/graph.min.css" rel="stylesheet">
+	<link href="css/rickshaw.min.css" rel="stylesheet">
+	</head>
+	<body class="grey">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12"><div class="orange dash_block"><div id="graph"></div></div></div>
+				<div class="col-md-8"><div class="bright-orange dash_block"><div id="graph2"></div></div></div>
+				<div class="col-md-4"><div class="orange dash_block"><div id="number1"></div></div></div>
+			</div>
+		</div>
+		<script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+	    <script type="text/javascript" src="js/libs/jquery.couch.js"></script>
+		<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+		<script type="text/javascript" src="js/libs/rickshaw.min.js"></script>
+		<script type="text/javascript" src="js/app/tiles/Tile.js"></script>
+		<script type="text/javascript" src="js/app/tiles/graphTile.js"></script>
+		<script type="text/javascript" src="js/app/tiles/liveGraphTile.js"></script>
+		<script type="text/javascript" src="js/app/tiles/numberTile.js"></script>
+		<script type="text/javascript" src="js/app/tiles/liveNumberTile.js"></script>
+		<script type="text/javascript" src="js/app/dataProviders/dataProvider.js"></script>
+		<script type="text/javascript" src="js/app/dataProviders/temperatureDataProvider.js"></script>
+		<script type="text/javascript" src="js/app/tiles/test.js"></script>
+	</body>
 </html>

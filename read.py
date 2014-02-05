@@ -2,7 +2,7 @@ import time
 import couchdb
 
 #settings
-server_url = 'http://localhost:5984/'
+server_url = 'http://localhost:8080/'
 dbname = 'temperature'
 
 couch = couchdb.Server(server_url)
