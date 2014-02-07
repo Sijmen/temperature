@@ -28,5 +28,5 @@ var graph2 = new LiveGraphTile('#graph2',tempData,{
 	}
 });
 
-var number = new LiveNumberTile('#number1',tempData);
+var number = new LiveKnobNumberTile('#number1',tempData);
 number.vSetPostText(' &deg;C');

@@ -7,7 +7,7 @@ LiveNumberTile = Class.create(NumberTile,{
 		//defaults
 		this.sPostText = "";
 		this.sPreText = "";
-		this.oStyle = {"font-size":"80px","text-align":"center"};
+		this.oStyle = {"font-size":"80px","text-align":"center","width":"100%"};
 		this.iFadeSpeed = 500;
 		this.oDataProvider.vRegisterNewNumbers(function(a_iValue){
 			$this.vUpdate(a_iValue);
