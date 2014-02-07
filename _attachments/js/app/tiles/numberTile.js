@@ -39,7 +39,8 @@ NumberTile = Class.create(Tile,{
 			duration: 1000,
 			easing: 'swing',
 			progress: function () {
-				$(this).val(Math.round(this.value * 10) / 10).trigger('change');
+				value = +this.value.toFixed(2);
+				$(this).val(value).trigger('change');
 				$this.vSetNumber(this.value);
 				$($this.sSelector + ' .number').html($this.sGetDisplayText());
 			}
@@ -54,6 +55,7 @@ NumberTile = Class.create(Tile,{
 	},
 
 	vSetNumber : function(a_iNumber){
+		this.iNumber = +a_iNumber.toFixed(2);
 		this.iNumber = Math.round(a_iNumber * 10) / 10;
 		return this;
 	},

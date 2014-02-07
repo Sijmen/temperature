@@ -8,13 +8,19 @@ KnobNumberTile = Class.create(NumberTile,{
 		this.bRendered = true;
 		$(this.sSelector+' .animate_number').knob({
 			value: 0,
-			'readOnly': true,
-			'width': 120,
-			'height': 120,
-			'dynamicDraw': true,
-			'thickness': 0.2,
-			'tickColorizeValues': true,
-			'skin': 'tron'
+			readOnly: true,
+			dynamicDraw: true,
+			displayPrevious:true,
+			thickness: 0.3,
+			fgColor:'#fff',
+			bgColor:'#662B4C',
+			inputColor:'#fff',
+			angleArc:250,
+			angleOffset:-125,
+			step:0.1,
+			min:0,
+			max:35,
+			tickColorizeValues: true
 		});
 		return this;
 	}
