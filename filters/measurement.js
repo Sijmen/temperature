@@ -5,5 +5,5 @@
  * @return true when doc is a temperature measurement, else false
  */
 function(doc, req){
-    return doc.temperature;
+    return doc.dev == req.query.dev || doc.sensor_id == req.query.dev;
 }
