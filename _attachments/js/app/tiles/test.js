@@ -1,7 +1,8 @@
 $oDB = $.couch.db('temperature');
 var tempData = new TemperatureDataProvider($oDB,{
 	filter:'temperature/measurement',
-	view:"temperature"
+	view:"temperature",
+	sensor_id:"28-0000053bccc5"
 });
 var graph = new GraphTile('#graph',tempData,{
 	range:{
