@@ -1,7 +1,8 @@
 GraphTile = Class.create(Tile,{
-	initialize : function(a_sSelector,a_oDataProvider,a_oOptions){
+	initialize : function($super,a_sSelector,a_oDataProvider,a_oOptions){
 		var $this = this;
-		this.oOptions = $.extend({
+		$super(a_sSelector,a_oOptions);
+		this.oOptions = $.extend(true,{
 			timespan:300,
 			smoothScale:1,
 			//allowed types: ["time","data"]
@@ -15,8 +16,7 @@ GraphTile = Class.create(Tile,{
 				min:"auto",
 				renderer:"area"
 			}
-		},a_oOptions);
-		this.vInit();
+		},this.oOptions);
 		this.sSelector = a_sSelector;
 		this.bRendered = false;
 		this.oGraph = null;

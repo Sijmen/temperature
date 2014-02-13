@@ -1,9 +1,10 @@
 NumberTile = Class.create(Tile,{
-	initialize : function(a_sSelector,a_iNumber){
+	initialize : function($super,a_sSelector,a_iNumber,a_oOptions){
+		$super(a_sSelector,a_oOptions);
 		this.vInit();
 		if(typeof a_iNumber !== "number")
 			throw "NumberTile and subclasses must be created with a valid number," + typeof a_iNumber + " given.";
-		this.iNumber = this.vSetNumber(a_iNumber);
+		this.vSetNumber(a_iNumber);
 		this.sPostText = "";
 		this.sPreText = "";
 		this.sSelector = a_sSelector;

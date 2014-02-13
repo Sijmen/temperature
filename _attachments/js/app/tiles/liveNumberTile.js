@@ -1,6 +1,7 @@
 LiveNumberTile = Class.create(NumberTile,{
-	initialize : function($super,a_sSelector, a_oDataProvider){
+	initialize : function($super,a_sSelector, a_oDataProvider,a_oOptions){
 		var $this = this;
+		$super(a_sSelector,0,a_oOptions);
 		this.vInit();
 		this.oDataProvider = a_oDataProvider;
 		this.sSelector = a_sSelector;

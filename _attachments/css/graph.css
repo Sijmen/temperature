@@ -1,7 +1,9 @@
 .rickshaw_graph
 {
 }
-
+.block_title{
+    color: rgba(255,255,255,0.4);
+}
 
 .row .dash_block{
 	margin-top: 	10px;
