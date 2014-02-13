@@ -11,6 +11,10 @@ TemperatureDataProvider = Class.create(DataProvider,{
 			throw "CouchDB view is not defined for dataprovider. This is required."+
 				"Add it with oOptions.view = 'viewname'";
 		}
+		if(typeof $this.oOptions.sensor_id === "undefined"){
+			throw "The temperature requires a device when initialized. Add it to the options" +
+			"with oOptions.sensor_id = \"sensor_id\"";
+		}
 
 		// get
 		$.couch.db(this.oDB.name).info({
@@ -21,7 +25,8 @@ TemperatureDataProvider = Class.create(DataProvider,{
 					feed:"normal",
 					since:recentUpdateSeq,
 					filter:$this.oOptions.filter,
-					include_docs:true
+					include_docs:true,
+					dev:$this.oOptions.sensor_id
 				};
 				$.getJSON("/"+$this.oDB.name+"/_changes?"+
 					decodeURIComponent($.param(oOptions)), function(oData) {
@@ -42,13 +47,13 @@ TemperatureDataProvider = Class.create(DataProvider,{
 		$super(a_oRange);
 		var $this = this;
 		this.oDB.view(this.oOptions.view + "/time", {
-			startkey:a_oRange.min,
-			endkey:a_oRange.max,
+			startkey:[this.oOptions.sensor_id,a_oRange.min],
+			endkey:[this.oOptions.sensor_id,a_oRange.max],
 			reduce:false,
 			update_seq : true,
 			success : function(data) {
 				$.each(data.rows,function(index,couchDoc){
-					a_fCallback({'y':couchDoc.value.temp,'x':parseInt(couchDoc.key/1000,10)});
+					a_fCallback({'y':couchDoc.value.data.temperature,'x':parseInt(couchDoc.key[1]/1000,10)});
 				});
 			}
 		});
@@ -73,7 +78,11 @@ TemperatureDataProvider = Class.create(DataProvider,{
 
 	vSetupChanges : function(a_iSince) {
 		if (!this.bChangesRunning) {
-			this.oChangeHandler = this.oDB.changes(a_iSince,{include_docs:true});
+			this.oChangeHandler = this.oDB.changes(a_iSince,{
+				include_docs:true,
+				filter:this.oOptions.filter,
+				dev:this.oOptions.sensor_id
+			});
 			this.bChangesRunning = true;
 			var $this = this;
 			this.oChangeHandler.onChange(function(resp){$this.vOnNewDataReceive(resp,$this);});
