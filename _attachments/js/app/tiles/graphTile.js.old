@@ -10,10 +10,6 @@ GraphTile = Class.create(Tile,{
 				name : 'serie1',
 				data : [],
 				color : '#c05020'
-			},
-			graphOptions:{
-				min:"auto",
-				renderer:"area"
 			}
 		},a_oOptions);
 		this.vInit();
@@ -56,17 +52,17 @@ GraphTile = Class.create(Tile,{
 	vRender : function(){
 		if(this.bRendered)
 			this.vUpdate();
-		this.oGraph = new Rickshaw.Graph( $.extend(true,{
+		this.oGraph = new Rickshaw.Graph( {
 
 			element: document.querySelector(this.sSelector),
-			renderer: "area",
+			renderer: 'area',
 			width: $(this.sSelector).parent().innerWidth(),
 			height: 350,
 			min: "auto",
 			padding: {top:0.1,bottom:0.1},
 			stroke:false,
 			series: this.aSeries
-		},this.oOptions.graphOptions ));
+		} );
 
 		this.hoverDetail = new Rickshaw.Graph.HoverDetail({
 			graph: this.oGraph
@@ -115,6 +111,7 @@ GraphTile = Class.create(Tile,{
 		this.oOptions.smoothScale = a_iSmooth;
 	},
 	vResize : function(){
+		console.log("Resizing in graphTile "+this.sSelector);
 		this.oGraph.configure({
 			width: $(this.sSelector).parent().innerWidth()
 			// height: $(this.sSelector).parent().innerHeight()

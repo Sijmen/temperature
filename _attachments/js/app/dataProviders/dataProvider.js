@@ -63,5 +63,12 @@ DataProvider = Class.create({
 	*/
 	vRegisterNewGraphs : function(a_fCallback){
 		this.aGraphsCallbacks.push(a_fCallback);
+	},
+
+	/**
+	* Use a filterDataProvider to filter results
+	*/
+	oFilter : function(a_mFilters){
+		return new filterDataProvider(a_mFilters,this);
 	}
 });

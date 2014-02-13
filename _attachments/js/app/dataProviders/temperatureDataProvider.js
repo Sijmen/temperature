@@ -1,4 +1,4 @@
-TemperatureDataProvider = Class.create(DataProvider,{
+TemperatureDataProvider = Class.create(DataProvider,{p
 	initialize : function($super,a_oDB,a_oOptions){
 		$super();
 		var $this = this;
