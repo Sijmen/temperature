@@ -38,8 +38,13 @@ NumberTile = Class.create(Tile,{
 		$(this.sSelector+' .animate_number').animate({value:a_iNumber},{
 			duration: 1000,
 			easing: 'swing',
-			progress: function () {
+			progress: function (a_oAnimation, a_iProgress, a_remainingMs) {
 				value = +this.value.toFixed(2);
+				$(this).val(value).trigger('change');
+				$this.vSetNumber(this.value);
+				$($this.sSelector + ' .number').html($this.sGetDisplayText());
+			},
+			done: function(a_oAnimation,a_bJumpedToEnd){
 				$(this).val(value).trigger('change');
 				$this.vSetNumber(this.value);
 				$($this.sSelector + ' .number').html($this.sGetDisplayText());
