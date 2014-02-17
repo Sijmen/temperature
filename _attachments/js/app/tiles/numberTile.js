@@ -46,14 +46,18 @@ NumberTile = Class.create(Tile,{
 					value = parseFloat(value);
 				}
 				value = parseFloat(value.toFixed($this.oOptions.precision));
-				$(this).val(value).trigger('change');
-				$this.vSetNumber(this.value);
+				$this.vSetNumber(value);
 				$($this.sSelector + ' .number').html($this.sGetDisplayText());
+				$(this).val(value).trigger('change');
 			},
 			done: function(a_oAnimation,a_bJumpedToEnd){
-				$(this).val(value).trigger('change');
-				$this.vSetNumber(this.value);
+				value = this.value;
+				if(typeof value === "string"){
+					value = parseFloat(value);
+				}
+				$this.vSetNumber(value);
 				$($this.sSelector + ' .number').html($this.sGetDisplayText());
+				$(this).val(value).trigger('draw');
 			}
 		});
 		// this.vRender();
