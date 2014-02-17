@@ -35,6 +35,7 @@ TemperatureDataProvider = Class.create(DataProvider,{
 						oDoc = oData.results.pop().doc;
 						$this.vOnNewNumberData(oDoc.temperature);
 						$this.vOnNewGraphData({y:oDoc.temperature,x:Math.round(oDoc.time/1000)});
+						$this.vOnNewData(oDoc);
 						$this.vSetupChanges(oData.last_seq);
 					}
 				});
@@ -60,6 +61,24 @@ TemperatureDataProvider = Class.create(DataProvider,{
 
 	},
 
+	vRequestRangeData : function($super,a_oRange,a_fCallback){
+		//call super for sanity checks on a_oRange
+		$super(a_oRange);
+		var $this = this;
+		this.oDB.view(this.oOptions.view + "/time", {
+			startkey:[this.oOptions.sensor_id,a_oRange.min],
+			endkey:[this.oOptions.sensor_id,a_oRange.max],
+			reduce:false,
+			update_seq : true,
+			success : function(data) {
+				$.each(data.rows,function(index,couchDoc){
+					a_fCallback($.extend(true,couchDoc.value.data,{time:parseInt(couchDoc.key[1]/1000,10)}));
+				});
+			}
+		});
+
+	},
+
 	vOnNewDataReceive :function(resp,$this) {
 		$this = $this || this;
 		if(typeof resp !== 'undefined'){
@@ -68,6 +87,7 @@ TemperatureDataProvider = Class.create(DataProvider,{
 				if( typeof value.doc !== 'undefined' &&
 					typeof value.doc.time !== 'undefined')
 				{
+					$this.vOnNewData(value.doc);
 					$this.vOnNewGraphData({y:value.doc.temperature,x:Math.round(value.doc.time/1000)});
 				}
 			});

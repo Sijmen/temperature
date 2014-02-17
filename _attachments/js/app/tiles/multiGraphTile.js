@@ -13,15 +13,16 @@ MultiGraphTile = Class.create(GraphTile,{
 		},a_oSerieOptions);
 		this.oSeries[oSerieOptions.name] = this.oSerieOptions;
 		this.aSeries.push(oSerieOptions);
-		if(typeof a_oOptions.range !== "undefined"){
-			a_oDataProvider.vRequestGraphRangeData(this.oOptions.range, function(a_oData){
-				oSerieOptions.data.push(a_oData);
-				$this.vUpdate();
-			});
+		if(typeof a_oOptions !== "undefined" && typeof a_oOptions.range !== "undefined"){
+			oRange = a_oOption.range;
 		}
 		else{
-			throw "range is undefined in options for adding a serie. This must be provided";
+			oRange = $this.oOptions.range;
 		}
+		a_oDataProvider.vRequestGraphRangeData(oRange, function(a_oData){
+			oSerieOptions.data.push(a_oData);
+			$this.vUpdate();
+		});
 
 	}
 });
