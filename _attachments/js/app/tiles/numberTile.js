@@ -17,9 +17,10 @@ NumberTile = Class.create(Tile,{
 	vRender : function(){
 		// $(this.sSelector+" .number").fadeOut(this.iFadeSpeed);
 		if(this.bRendered){
+			this.vUpdate();
 			return this;
 		}
-		$(this.sSelector).html(
+		$(this.sSelector).append(
 			'<div class="number" style="display:none">'+this.sGetDisplayText()+'</div><input class="animate_number" style="display:none" value="'+this.iNumber+'"/>');
 		$(this.sSelector+" .number").css(this.oStyle).fadeIn(this.iFadeSpeed);
 		this.bRendered = true;

@@ -13,7 +13,8 @@ var graph = new MultiGraphTile('#graph',tempData,{
 		name : 'Temperatuur',
 		data : [],
 		color : '#c05020'
-	}
+	},
+	name:'24 uur'
 });
 // graph.vAddSerie(tempData.oFilter({graph:{y:"temperature",x:"time"}}),{
 // 	range:{
@@ -38,8 +39,9 @@ var graph2 = new LiveGraphTile('#graph2',tempData,{
 		name : 'Temperatuur',
 		data : [],
 		color : '#c05020'
-	}
+	},
+	name:'5 minuten'
 });
 
-var number = new LiveKnobNumberTile('#number1',tempData);
+var number = new LiveKnobNumberTile('#number1',tempData,{name:"Laatste waarde"});
 number.vSetPostText(' &deg;C');
