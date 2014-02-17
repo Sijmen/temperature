@@ -1,6 +1,7 @@
 NumberTile = Class.create(Tile,{
 	initialize : function($super,a_sSelector,a_iNumber,a_oOptions){
-		$super(a_sSelector,a_oOptions);
+		oOptions = $.extend(true,{precision:1},a_oOptions);
+		$super(a_sSelector,oOptions);
 		this.vInit();
 		if(typeof a_iNumber !== "number")
 			throw "NumberTile and subclasses must be created with a valid number," + typeof a_iNumber + " given.";
@@ -44,7 +45,7 @@ NumberTile = Class.create(Tile,{
 				if(typeof value === "string"){
 					value = parseFloat(value);
 				}
-				value = parseFloat(value.toFixed(2));
+				value = parseFloat(value.toFixed($this.oOptions.precision));
 				$(this).val(value).trigger('change');
 				$this.vSetNumber(this.value);
 				$($this.sSelector + ' .number').html($this.sGetDisplayText());
@@ -67,7 +68,7 @@ NumberTile = Class.create(Tile,{
 	vSetNumber : function(a_iNumber){
 		if(typeof a_iNumber === "string")
 			a_iNumber = parseFloat(a_iNumber);
-		this.iNumber = parseFloat(a_iNumber.toFixed(2));
+		this.iNumber = parseFloat(a_iNumber.toFixed(this.oOptions.precision));
 		// this.iNumber = Math.round(a_iNumber * 10) / 10;
 		return this;
 	},
