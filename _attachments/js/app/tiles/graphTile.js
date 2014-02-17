@@ -115,11 +115,14 @@ GraphTile = Class.create(Tile,{
 		this.oOptions.smoothScale = a_iSmooth;
 	},
 	vResize : function(){
-		this.oGraph.configure({
-			width: $(this.sSelector).parent().innerWidth()
-			// height: $(this.sSelector).parent().innerHeight()
-		});
-		this.vUpdate();
+
+		if(typeof this.oGraph !== "undefined" && this.oGraph !== null){
+			this.oGraph.configure({
+				width: $(this.sSelector).parent().innerWidth()
+				// height: $(this.sSelector).parent().innerHeight()
+			});
+			this.vUpdate();
+		}
 	},
 
 	vSetTimespan : function(a_oFirstDate, a_oSecondDate){
