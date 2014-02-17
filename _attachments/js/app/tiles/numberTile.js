@@ -40,7 +40,11 @@ NumberTile = Class.create(Tile,{
 			duration: 1000,
 			easing: 'swing',
 			progress: function (a_oAnimation, a_iProgress, a_remainingMs) {
-				value = +this.value.toFixed(2);
+				value = this.value;
+				if(typeof value === "string"){
+					value = parseFloat(value);
+				}
+				value = parseFloat(value.toFixed(2));
 				$(this).val(value).trigger('change');
 				$this.vSetNumber(this.value);
 				$($this.sSelector + ' .number').html($this.sGetDisplayText());
@@ -61,8 +65,10 @@ NumberTile = Class.create(Tile,{
 	},
 
 	vSetNumber : function(a_iNumber){
-		this.iNumber = +a_iNumber.toFixed(2);
-		this.iNumber = Math.round(a_iNumber * 10) / 10;
+		if(typeof a_iNumber === "string")
+			a_iNumber = parseFloat(a_iNumber);
+		this.iNumber = parseFloat(a_iNumber.toFixed(2));
+		// this.iNumber = Math.round(a_iNumber * 10) / 10;
 		return this;
 	},
 
