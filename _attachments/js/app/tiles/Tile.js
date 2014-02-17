@@ -15,6 +15,7 @@ Tile.prototype = {
 
 	},
 
+
 	vInit : function(){
 		var $this = this;
 		$(window).resize(function(){
@@ -41,5 +42,7 @@ Tile.prototype = {
 	/**
 	* To override
 	*/
-	vUpdate : function(){}
+	vUpdate : function(){
+		$(this.sSelector +' .last_update').html('Laatste update: '+(new Date()).toLocaleTimeString());
+	}
 };

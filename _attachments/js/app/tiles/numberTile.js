@@ -31,7 +31,8 @@ NumberTile = Class.create(Tile,{
 		return this.sPreText+this.iNumber+this.sPostText;
 	},
 
-	vUpdate : function(a_iNumber){
+	vUpdate : function($super,a_iNumber){
+		$super();
 		var $this = this;
 		this.vSetNumber(a_iNumber);
 		if(!this.bRendered){

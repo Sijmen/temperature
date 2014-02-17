@@ -91,7 +91,8 @@ GraphTile = Class.create(Tile,{
 		this.oGraph.render();
 		this.bRendered = true;
 	},
-	vUpdate : function(a_bForce,a_bSorted){
+	vUpdate : function($super,a_bForce,a_bSorted){
+		$super();
 		var $this = this;
 		//calling render on every element is just plain stupid...
 		//so either we wait for some miliseconds in order to get all data
