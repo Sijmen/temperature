@@ -4,7 +4,8 @@ import pycurl
 import os, sys
 import json
 
-os.chdir(os.path.dirname(sys.argv[0]))
+if os.path.dirname(sys.argv[0]):
+	os.chdir(os.path.dirname(sys.argv[0]))
 
 data = json.load(open("settings.json"))
 host = str(data["database"]["host"])
@@ -15,15 +16,14 @@ dbname = str(data["database"]["name"])
 sensors = data["sensors"]
 
 c = pycurl.Curl()
-c.setopt(c.URL, 'http://' + user + ':' + password + '@' + host + ':' + port + '/' + dbname + '/_design/temperature/_view/time') 
+c.setopt(c.URL, 'http://%s:%s@%s:%s/%s/_design/temperature/_view/time' % (user,password,host,port,dbname)) 
 c.setopt(c.WRITEFUNCTION, lambda x: None)
 
-couch = couchdb.Server('http://' + host + ':' + port)
+couch = couchdb.Server('http://%s:%s' % (host,port))
 db = couch[dbname]
 
 while True:
 	for sensor in sensors:
-		print sensor["id"]
 		text = ''
 		# Read until the check is successful
 		while text.split("\n")[0].find("YES") == -1:
