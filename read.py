@@ -1,8 +1,9 @@
-import time
+import time, datetime
 import couchdb
 import pycurl
 import os, sys
 import json
+import thread
 
 if os.path.dirname(sys.argv[0]):
 	os.chdir(os.path.dirname(sys.argv[0]))
@@ -22,7 +23,7 @@ c.setopt(c.WRITEFUNCTION, lambda x: None)
 couch = couchdb.Server('http://%s:%s' % (host,port))
 db = couch[dbname]
 
-while True:
+def update_temperature(threadName):
 	for sensor in sensors:
 		text = ''
 		# Read until the check is successful
@@ -43,5 +44,8 @@ while True:
 		temperature = temperature / 1000
 		document = {"sensor_id":sensor["id"],"temperature":temperature,"time":int(round(time.time()*1000))}
 		db.save(document)
-	c.perform()
-	time.sleep(25)
+	c.perform()	
+
+while True:
+	thread.start_new_thread(update_temperature,("temperature",))
+	time.sleep(30)
