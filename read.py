@@ -23,7 +23,6 @@ c.setopt(c.WRITEFUNCTION, lambda x: None)
 couch = couchdb.Server('http://%s:%s' % (host,port))
 db = couch[dbname]
 
-
 def update_temperature(sensorId):
 	text = ''
 	# Read until the check is successful
