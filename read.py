@@ -16,9 +16,10 @@ password = str(data["database"]["password"])
 dbname = str(data["database"]["name"])
 sensors = data["sensors"]
 
-c = pycurl.Curl()
-c.setopt(c.URL, 'http://%s:%s@%s:%s/%s/_design/temperature/_view/time' % (user,password,host,port,dbname)) 
-c.setopt(c.WRITEFUNCTION, lambda x: None)
+if data["options"]["update_index_after_read"]:
+	c = pycurl.Curl()
+	c.setopt(c.URL, 'http://%s:%s@%s:%s/%s/_design/temperature/_view/time' % (user,password,host,port,dbname))
+	c.setopt(c.WRITEFUNCTION, lambda x: None)
 
 couch = couchdb.Server('http://%s:%s' % (host,port))
 db = couch[dbname]
@@ -42,10 +43,11 @@ def update_temperature(sensorId):
 	temperature = temperature / 1000
 	document = {"sensor_id":sensorId,"temperature":temperature,"time":int(round(time.time()*1000))}
 	db.save(document)
-	if threading.activeCount() == 2:
+
+	if threading.activeCount() == 2 and data["options"]["update_index_after_read"]:
 		c.perform()
 
 while True:
 	for sensor in sensors:
 		threading.Thread(target=update_temperature, args=(sensor["id"],)).start()
-	time.sleep(30)
+	time.sleep(data["options"]["read_timeout"])
