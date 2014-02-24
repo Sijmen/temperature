@@ -1,7 +1,20 @@
 function(doc){
-
-	if(doc.dev)
-		emit([doc.dev,doc.time],{data:doc.data});
-	else if(doc.sensor_id)
-		emit([doc.sensor_id,doc.time],{data:{temperature:doc.temperature}});
+	if(doc.time){
+		var dev;
+		var time = doc.time;
+		var data = {};
+		if(doc.dev){
+			dev = doc.dev;
+			data = doc.data;
+			data.time = time;
+		}
+		else if(doc.sensor_id){
+			data = {
+				temperature:doc.temperature,
+				time:time
+			};
+			dev = doc.sensor_id;
+		}
+		emit([dev,time],doc);
+	}
 }
