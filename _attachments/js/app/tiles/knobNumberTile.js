@@ -28,15 +28,9 @@ KnobNumberTile = Class.create(NumberTile,{
 });
 
 LiveKnobNumberTile = Class.create(LiveNumberTile,{
-	vRender : function(){
-		if(this.bRendered){
-			this.vUpdate();
-			return this;
-		}
-		$(this.sSelector).append(
-			'<div class="number" style="display:none">'+this.sGetDisplayText()+'</div><input class="animate_number" value="'+this.iNumber+'"/>');
-		this.bRendered = true;
-		$(this.sSelector+' .animate_number').knob({
+	initialize : function($super,a_sSelector, observable, options){
+		$super(a_sSelector,observable,options);
+		this.options = $.extend(true,{
 			value: 0,
 			readOnly: true,
 			dynamicDraw: true,
@@ -47,11 +41,21 @@ LiveKnobNumberTile = Class.create(LiveNumberTile,{
 			inputColor:'#fff',
 			angleArc:250,
 			angleOffset:-125,
-			step:0.1,
+			step:0.5,
 			min:0,
-			max:35,
+			max:3,
 			tickColorizeValues: true,
-		});
+		},options);
+	},
+	vRender : function(){
+		if(this.bRendered){
+			this.vUpdate();
+			return this;
+		}
+		$(this.sSelector).append(
+			'<div class="number" style="display:none">'+this.sGetDisplayText()+'</div><input class="animate_number" value="'+this.iNumber+'"/>');
+		this.bRendered = true;
+		$(this.sSelector+' .animate_number').knob(this.options);
 		return this;
 	}
 });
