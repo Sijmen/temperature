@@ -64,7 +64,7 @@ var graph2 = new GraphTile('#graph2',viewTemperature_60m.map(mapTemp),{
 	},
 	name:'60 minuten'
 });
-graph.vSetSmooth(4);
+graph2.vSetSmooth(4);
 graph2.vRender();
 var number = new LiveKnobNumberTile('#number1',temperatureStream.map(function(doc){return doc.temperature;}),{name:"Laatste waarde",max:30,step:0.5});
 number.vSetPostText(' &deg;C');
