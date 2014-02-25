@@ -21,7 +21,7 @@ if data["options"]["update_index_after_read"]:
 	c.setopt(c.URL, 'http://%s:%s@%s:%s/%s/_design/temperature/_view/time' % (user,password,host,port,dbname))
 	c.setopt(c.WRITEFUNCTION, lambda x: None)
 
-couch = couchdb.Server('http://%s:%s' % (host,port))
+couch = couchdb.Server('http://%s:%s@%s:%s' % (user, password, host, port))
 db = couch[dbname]
 
 def update_temperature(sensorId):
