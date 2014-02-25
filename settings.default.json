@@ -1,6 +1,6 @@
 {
     "options":{
-        "update_idex_after_read":"false",
+        "update_idex_after_read":false,
         "read_timeout": 30
     },
     "sensors":[
