@@ -1,12 +1,13 @@
+#!/usr/bin/python2
 import time
 import couchdb
 import pycurl
-import os, sys
+#import os, sys
 import json
 import threading
 
-if os.path.dirname(sys.argv[0]):
-	os.chdir(os.path.dirname(sys.argv[0]))
+# if os.path.dirname(sys.argv[0]):
+#	os.chdir(os.path.dirname(sys.argv[0]))
 
 data = json.load(open("settings.json"))
 host = str(data["database"]["host"])
@@ -17,6 +18,7 @@ dbname = str(data["database"]["name"])
 sensors = data["sensors"]
 
 if data["options"]["update_index_after_read"]:
+	print "index that shit"
 	c = pycurl.Curl()
 	c.setopt(c.URL, 'http://%s:%s@%s:%s/%s/_design/temperature/_view/time' % (user,password,host,port,dbname))
 	c.setopt(c.WRITEFUNCTION, lambda x: None)
