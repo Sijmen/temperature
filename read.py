@@ -18,7 +18,6 @@ dbname = str(data["database"]["name"])
 sensors = data["sensors"]
 
 if data["options"]["update_index_after_read"]:
-	print "index that shit"
 	c = pycurl.Curl()
 	c.setopt(c.URL, 'http://%s:%s@%s:%s/%s/_design/temperature/_view/time' % (user,password,host,port,dbname))
 	c.setopt(c.WRITEFUNCTION, lambda x: None)
