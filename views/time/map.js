@@ -5,8 +5,13 @@ function(doc){
 		var data = {};
 		if(doc.dev){
 			dev = doc.dev;
-			data = doc.data;
-			data.time = time;
+			if(doc.data){
+				data = doc.data;
+				data.time = time;
+			}
+			else{
+				data = doc;
+			}
 		}
 		else if(doc.sensor_id){
 			data = {

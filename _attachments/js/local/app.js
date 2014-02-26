@@ -22,15 +22,24 @@ var baseOptions60m = $.extend({range:range60minutes},baseOptions);
 
 //Get the historic values
 var viewTemperature_24h = Rx.Observable.fromCouchDBView($oDB,$.extend({device:'28-0000053bccc5'},baseOptions24h));
+var viewHumidity_24h = Rx.Observable.fromCouchDBView($oDB,$.extend({device:'humidity'},baseOptions24h));
 var viewTemperature_60m = Rx.Observable.fromCouchDBView($oDB,$.extend({device:'28-0000053bccc5'},baseOptions60m));
+var viewHumidity_60m = Rx.Observable.fromCouchDBView($oDB,$.extend({device:'humidity'},baseOptions60m));
 //Create the live stream for one sensor/device
 var temperatureStream = dbStream.filter(function(doc){return doc.sensor_id == "28-0000053bccc5";});
+var humidityStream = dbStream.filter(function(doc){return doc.dev == "humidity";});
 // Helper function to map values of db to values to graph.
 function mapTemp(doc){
-	console.log(doc);
 	return {
 		x:Math.round(doc.time/1000),
 		y:doc.temperature
+	};
+}
+
+function mapHum(doc){
+	return {
+		x:Math.round(doc.time/1000),
+		y:parseInt(doc.humidity)
 	};
 }
 
@@ -44,13 +53,9 @@ var graph = new GraphTile('#graph',viewTemperature_24h.concat(temperatureStream)
 	},
 	name:'24 uur'
 });
-// graph.vAddSerie(viewTemperature_24h_2,{
-// 	serie:{
-// 		name : 'Temperatuur',
-// 		data : [],
-// 		color : '#c25222'
-// 	}
-// });
+// viewHumidty_24h.concat(humidityStream).map(mapHum).subscribe(function(data){console.log(data);});
+// viewTemperature_24h.concat(temperatureStream).map(mapTemp).subscribe(function(data){console.log(data);});
+// graph.vAddSerie(viewHumidity_24h.concat(humidityStream).map(mapHum),{name:"Humidity",data:[],color:'#9c4274'});
 graph.vSetSmooth(12);
 graph.vRender();
 
@@ -60,11 +65,17 @@ var graph2 = new GraphTile('#graph2',viewTemperature_60m.map(mapTemp),{
 	serie:{
 		name : 'Temperatuur',
 		data : [],
-		color : '#c05020'
+		color : '#c05020',
+		renderer : 'area'
 	},
-	name:'60 minuten'
+	name:'60 minuten',
+	graphOptions:{
+		renderer:'multi',
+		min:0
+	}
 });
 graph2.vSetSmooth(4);
+graph2.vAddSerie(viewHumidity_60m.concat(humidityStream).map(mapHum),{name:"Humidity",data:[],color:'#9c4274',renderer:'line'});
 graph2.vRender();
 var number = new LiveKnobNumberTile('#number1',temperatureStream.map(function(doc){return doc.temperature;}),{name:"Laatste waarde",max:30,step:0.5});
 number.vSetPostText(' &deg;C');
@@ -72,16 +83,19 @@ number.vSetPostText(' &deg;C');
 var index = new LiveKnobNumberTile('#indexing',ActiveTasksDataProvider.map(function(data){
 	var activeTask = null;
 	$.each(data,function(key,task){
-		if(task.type == "indexer")
-			if(activeTask === null)
+		if(task.type == "indexer"){
+			if(activeTask === null){
 				activeTask = task;
+			}
 			activeTask = task.progress < activeTask.progress ? task : activeTask ;
+		}
 	});
 	if(activeTask === null)
 		return 100;
 	return parseFloat(((activeTask.changes_done/activeTask.total_changes)*100).toFixed(1));
 }),{
 	max:100,
-	step:0.1
+	step:0.1,
+	name:"Indexing"
 });
 index.vSetPostText(' %');
