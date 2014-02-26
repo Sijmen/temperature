@@ -17,3 +17,15 @@ All dependencies are included. The project depends on:
  * [Rickshaw Graph](https://github.com/shutterstock/rickshaw)
  * [RxJs](https://github.com/Reactive-Extensions/RxJS)
  * [Twitter bootstrap](https://github.com/twbs/bootstrap)
+
+## Tiles
+The program works with tiles, which are capable of displaying information. Below all tiles will be described. All types of tiles are available live, or static.
+### Graphs
+Graph tiles accept at least one Observable, and more can be added with the 'vAddSerie' function. The initialization of a graphtile accepts options as a last parameter. Among these options are the 'graphOptions' which are the options that Rickshaw Graph accepts. For serie options holds the same, they accept the same options as Rickshaw series.
+
+Currently two Y-axes are not available, but maybe available in the future.
+
+### Numbers
+Numbers tiles come in two flavours, with or without a knob. With a knob, they look like a gauge, progressbar or whatever you would like to call it. The number is centered and the bar is around it. The knob is based on JQuery Knob and accepts the same parameters in the options. 
+
+The other flavour is the normal number tile. This only displays the number and on update gives a light flash. This number can have a pre and post text. Like temperature &deg;.
