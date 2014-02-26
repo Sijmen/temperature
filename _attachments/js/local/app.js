@@ -21,10 +21,10 @@ var baseOptions24h = $.extend({range:range24hours},baseOptions);
 var baseOptions60m = $.extend({range:range60minutes},baseOptions);
 
 //Get the historic values
-var viewTemperature_24h = Rx.Observable.fromCouchDBView($oDB,$.extend({device:'28-0000055d5119'},baseOptions24h));
-var viewTemperature_60m = Rx.Observable.fromCouchDBView($oDB,$.extend({device:'28-0000055d5119'},baseOptions60m));
+var viewTemperature_24h = Rx.Observable.fromCouchDBView($oDB,$.extend({device:'28-0000053b9dd6'},baseOptions24h));
+var viewTemperature_60m = Rx.Observable.fromCouchDBView($oDB,$.extend({device:'28-0000053b9dd6'},baseOptions60m));
 //Create the live stream for one sensor/device
-var temperatureStream = dbStream.filter(function(doc){return doc.sensor_id == "28-0000055d5119";});
+var temperatureStream = dbStream.filter(function(doc){return doc.sensor_id == "28-0000053b9dd6";});
 // Helper function to map values of db to values to graph.
 function mapTemp(doc){
 	console.log(doc);
