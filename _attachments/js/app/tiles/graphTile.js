@@ -66,7 +66,10 @@ GraphTile = Class.create(Tile,{
 			},$this.oOptions.graphOptions ));
 
 			$this.hoverDetail = new Rickshaw.Graph.HoverDetail({
-				graph: $this.oGraph
+				graph: $this.oGraph,
+				xFormatter: function(x) {
+                	return new Date(x * 1000).toString();
+            	},
 			});
 
 			$this.smoother = new Rickshaw.Graph.Smoother({
