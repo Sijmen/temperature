@@ -2,28 +2,37 @@
 import time
 import couchdb
 import pycurl
-#import os, sys
+import os, sys
 import json
 import threading
 
 # if os.path.dirname(sys.argv[0]):
 #	os.chdir(os.path.dirname(sys.argv[0]))
+if(os.path.isfile("../db_settings.json")):
+	databaseSettings = json.load(open("../db_settings.json"))
+elif (os.path.isfile("../db_settings.default.json")):
+	databaseSettings = json.load(open("../db_settings.default.json"))
+else
+	raise Exception('No database setting file found!')
 
-data = json.load(open("settings.json"))
-host = str(data["database"]["host"])
-port = str(data["database"]["port"])
-user = str(data["database"]["user"])
-password = str(data["database"]["password"])
-dbname = str(data["database"]["name"])
-sensors = data["sensors"]
 
-if data["options"]["update_index_after_read"]:
+host = str(databaseSettings["host"])
+port = str(databaseSettings["port"])
+user = str(databaseSettings["user"])
+password = str(databaseSettings["password"])
+dbname = str(databaseSettings["name"])
+
+couch = couchdb.Server('http://%s:%s' % (host, port))
+couch.resource.credentials = (user, password)
+db = couch[dbname]
+settings = db['settings']['temperature']
+sensors = settings["sensors"]
+
+if settings["options"]["update_index_after_read"]:
 	c = pycurl.Curl()
 	c.setopt(c.URL, 'http://%s:%s@%s:%s/%s/_design/temperature/_view/time' % (user,password,host,port,dbname))
 	c.setopt(c.WRITEFUNCTION, lambda x: None)
 
-couch = couchdb.Server('http://%s:%s@%s:%s' % (user, password, host, port))
-db = couch[dbname]
 
 def update_temperature(sensorId):
 	text = ''
@@ -45,10 +54,10 @@ def update_temperature(sensorId):
 	document = {"sensor_id":sensorId,"temperature":temperature,"time":int(round(time.time()*1000))}
 	db.save(document)
 
-	if threading.activeCount() == 2 and data["options"]["update_index_after_read"]:
+	if threading.activeCount() == 2 and settings["options"]["update_index_after_read"]:
 		c.perform()
 
 while True:
 	for sensor in sensors:
 		threading.Thread(target=update_temperature, args=(sensor["id"],)).start()
-	time.sleep(data["options"]["read_timeout"])
+	time.sleep(settings["options"]["read_timeout"])
