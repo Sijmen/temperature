@@ -1,2 +1,4 @@
 .couchapprc
+settings.json
 *.sublime-project
+*.min.js

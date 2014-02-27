@@ -1,0 +1,16 @@
+{
+    "options":{
+        "update_index_after_read":false,
+        "read_timeout": 30
+    },
+    "sensors":[
+        {"id":"28-XX"}
+    ],
+    "database":{
+        "name":"temperature",
+        "host":"localhost",
+        "port":"5984",
+        "user":"",
+        "password":""
+    }
+}
