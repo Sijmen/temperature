@@ -2,10 +2,7 @@ GraphTile = Class.create(Tile,{
 	initialize : function($super,a_sSelector,a_oObservable,a_oOptions){
 		var $this = this;
 		$super(a_sSelector,a_oOptions);
-
-		console.log('maak mijn grafiek');
-		console.log(a_oOptions);
-		this.oGraph = {};
+		// this.oGraph = {};
 		this.oOptions = $.extend(true,{
 			timespan:300,
 			smoothScale:1,
@@ -37,7 +34,7 @@ GraphTile = Class.create(Tile,{
 	vAddSerie : function(a_oObservable,a_oSerieOptions,a_oOptions){
 		this.aSeries.push(a_oSerieOptions);
 		this.oSeries[a_oSerieOptions.name] = a_oSerieOptions;
-		this.zipped = this.zipped.zip(a_oObservable,function(currentData,newData){
+		this.zipped = this.zipped.combinelatest(a_oObservable,function(currentData,newData){
 			currentData.push({serie:a_oSerieOptions.name,data:newData});
 			return currentData;
 		});
@@ -55,7 +52,7 @@ GraphTile = Class.create(Tile,{
 			});
 		}
 
-		if(this.aSeries[0].data.length > 0){
+		if(this.aSeries[0].data.length > 0 && !$this.oGraph){
 			$this.oGraph = new Rickshaw.Graph( $.extend(true,{
 
 				element: document.querySelector($this.sSelector),
@@ -64,7 +61,7 @@ GraphTile = Class.create(Tile,{
 				height: 350,
 				min: "auto",
 				padding: {top:0.1,bottom:0.1},
-				stroke:false,
+				// stroke:false,
 				series: $this.aSeries
 			},$this.oOptions.graphOptions ));
 

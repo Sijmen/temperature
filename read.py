@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 #!/usr/bin/python2
+=======
+#!/usr/bin/env python
+>>>>>>> sijmenTemperature/master
 import time
 import couchdb
 import pycurl
