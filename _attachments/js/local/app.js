@@ -97,7 +97,6 @@ graph2.vAddSerie(viewTemperature_60m.concat(temperatureStream).map(mapDesiredTem
 	renderer: 'line'
 });
 graph2.vSetSmooth(4);
-graph2.vAddSerie(viewHumidity_60m.concat(humidityStream).map(mapHum),{name:"Humidity",data:[],color:'#9c4274',renderer:'line'});
 graph2.vRender();
 var number = new LiveKnobNumberTile(
 	'#number1',temperatureStream.map(
