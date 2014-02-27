@@ -8,8 +8,6 @@ Tile.prototype = {
 			info_text:"",
 			last_updated:""
 		},a_oOptions);
-		console.log('maak mn tile');
-		console.log(a_oOptions);
 		$(this.sSelector).parent().prepend("<h2 class=\"block_title\">"+this.oOptions.name+"</h2>");
 		$(this.sSelector).parent().append("<div class=\"info_text\">"+this.oOptions.info_text+"</div>");
 		$(this.sSelector).parent().append("<div class=\"last_update\">"+this.oOptions.last_updated+"</div>");
