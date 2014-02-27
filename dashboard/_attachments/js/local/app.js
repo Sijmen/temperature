@@ -15,18 +15,19 @@ var range60minutes = {
 
 var baseOptions = {
 	view:'time',
-	designDoc:"dashboard"
+	designDoc:"temperature"
 };
 var baseOptions24h = $.extend({range:range24hours},baseOptions);
 var baseOptions60m = $.extend({range:range60minutes},baseOptions);
 
 //Get the historic values
-var viewTemperature_24h = Rx.Observable.fromCouchDBView($oDB,$.extend({device:'28-0000053b9dd6'},baseOptions24h));
-var viewTemperature_60m = Rx.Observable.fromCouchDBView($oDB,$.extend({device:'28-0000053b9dd6'},baseOptions60m));
-
+var viewTemperature_24h = Rx.Observable.fromCouchDBView($oDB,$.extend({device:'28-0000053bccc5'},baseOptions24h));
+var viewHumidity_24h = Rx.Observable.fromCouchDBView($oDB,$.extend({device:'humidity'},baseOptions24h));
+var viewTemperature_60m = Rx.Observable.fromCouchDBView($oDB,$.extend({device:'28-0000053bccc5'},baseOptions60m));
+var viewHumidity_60m = Rx.Observable.fromCouchDBView($oDB,$.extend({device:'humidity'},baseOptions60m));
 //Create the live stream for one sensor/device
-var temperatureStream = dbStream.filter(function(doc){return doc.sensor_id == "28-0000053b9dd6";});
-
+var temperatureStream = dbStream.filter(function(doc){return doc.sensor_id == "28-0000053bccc5";});
+var humidityStream = dbStream.filter(function(doc){return doc.dev == "humidity";});
 // Helper function to map values of db to values to graph.
 function mapTemp(doc){
 	return {
@@ -35,79 +36,48 @@ function mapTemp(doc){
 	};
 }
 
-// Helper function to map values of db to values to graph.
-function mapDesiredTemp(doc){
-	desired = doc.desiredTemperature || 0;
+function mapHum(doc){
 	return {
 		x:Math.round(doc.time/1000),
-		y:desired
+		y:parseInt(doc.humidity)
 	};
 }
 
 // Create a 24hour graph
 var graph = new GraphTile('#graph',viewTemperature_24h.concat(temperatureStream).map(mapTemp),{
 	range:range24hours,
-	name: '24 uur',
 	serie:{
 		name : 'Temperatuur',
 		data : [],
-		color : '#c05020',
-		strokeWidth : 0,
-		renderer: 'area'
+		color : '#c05020'
 	},
-	graphOptions : {
-		stroke: true,
-		renderer:'multi',
-		offset: 'value',
-		min: 0,
-		unstack: true
-	}
+	name:'24 uur'
 });
-graph.vAddSerie(viewTemperature_24h.concat(temperatureStream).map(mapDesiredTemp),{
-	name : 'Gewenste Temperatuur',
-	data : [],
-	color : '#610B0B',
-	renderer: 'line'
-});
+// viewHumidty_24h.concat(humidityStream).map(mapHum).subscribe(function(data){console.log(data);});
+// viewTemperature_24h.concat(temperatureStream).map(mapTemp).subscribe(function(data){console.log(data);});
+// graph.vAddSerie(viewHumidity_24h.concat(humidityStream).map(mapHum),{name:"Humidity",data:[],color:'#9c4274'});
 graph.vSetSmooth(12);
 graph.vRender();
 
-var graph2 = new GraphTile('#graph2',viewTemperature_60m.concat(temperatureStream).map(mapTemp),{
+
+var graph2 = new GraphTile('#graph2',viewTemperature_60m.map(mapTemp),{
 	range:range60minutes,
-	name: '60 minuten',
 	serie:{
 		name : 'Temperatuur',
 		data : [],
 		color : '#c05020',
-		strokeWidth : 0,
-		renderer: 'area'
+		renderer : 'area'
 	},
-	graphOptions : {
-		stroke: true,
+	name:'60 minuten',
+	graphOptions:{
 		renderer:'multi',
-		offset: 'value',
-		min: 0,
-		unstack: true
+		min:0
 	}
 });
-graph2.vAddSerie(viewTemperature_60m.concat(temperatureStream).map(mapDesiredTemp),{
-	name : 'Gewenste Temperatuur',
-	data : [],
-	color : '#610B0B',
-	renderer: 'line'
-});
 graph2.vSetSmooth(4);
+graph2.vAddSerie(viewHumidity_60m.concat(humidityStream).map(mapHum),{name:"Humidity",data:[],color:'#9c4274',renderer:'line'});
 graph2.vRender();
-var number = new LiveKnobNumberTile(
-	'#number1',temperatureStream.map(
-		function(doc){
-			return doc.temperature;
-		}),
-		{
-			name:"Laatste waarde",max:30,step:0.5
-		}
-	);
-
+var number = new LiveKnobNumberTile('#number1',temperatureStream.map(function(doc){return doc.temperature;}),{name:"Laatste waarde",max:30,step:0.5});
 number.vSetPostText(' &deg;C');
 
 var index = new LiveKnobNumberTile('#indexing',ActiveTasksDataProvider.map(function(data){
