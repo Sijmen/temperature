@@ -10,11 +10,15 @@ import threading
 #	os.chdir(os.path.dirname(sys.argv[0]))
 if(os.path.isfile("../db_settings.json")):
 	databaseSettings = json.load(open("../db_settings.json"))
-elif (os.path.isfile("../db_settings.default.json")):
-	databaseSettings = json.load(open("../db_settings.default.json"))
-else
-	raise Exception('No database setting file found!')
-
+if (os.path.isfile("../db_settings.default.json")):
+	databaseSettings_default = json.load(open("../db_settings.default.json"))
+if not os.path.isfile("../db_settings.json") and not os.path.isfile("../db_settings.default.json"):
+	raise Except('No dabase settings file found. You should have a db_settings.default.json and/or a db_settings.json in the root folder.')
+# Merge default settings with user settings. Reduces the need to completely copy
+# the entire file, just edit the entries needed. Not tested for recursiveness prob
+# just overrides the entire sub dict.
+# does not seem to do recusive, see https://stackoverflow.com/questions/3232943
+databaseSettings = dict(databaseSettings_default.items() + databaseSettings.items())
 
 host = str(databaseSettings["host"])
 port = str(databaseSettings["port"])
@@ -25,7 +29,10 @@ dbname = str(databaseSettings["name"])
 couch = couchdb.Server('http://%s:%s' % (host, port))
 couch.resource.credentials = (user, password)
 db = couch[dbname]
-settings = db['settings']['temperature']
+if 'settings' in db:
+	settings = db['temperature_settings']
+elif 'settings.default' in db:
+	settings = db['temperature_settings.default']
 sensors = settings["sensors"]
 
 if settings["options"]["update_index_after_read"]:
