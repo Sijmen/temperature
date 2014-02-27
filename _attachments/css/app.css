@@ -43,3 +43,12 @@ body {
       .marketing p + h4 {
         margin-top: 28px;
       }
+.rickshaw_graph{
+  position: relative;
+}
+      .block_title{
+
+    position: absolute;
+    left: 50%;
+    margin-left: -75px;
+}

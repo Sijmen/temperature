@@ -2,6 +2,9 @@ GraphTile = Class.create(Tile,{
 	initialize : function($super,a_sSelector,a_oObservable,a_oOptions){
 		var $this = this;
 		$super(a_sSelector,a_oOptions);
+
+		console.log('maak mijn grafiek');
+		console.log(a_oOptions);
 		this.oGraph = {};
 		this.oOptions = $.extend(true,{
 			timespan:300,
