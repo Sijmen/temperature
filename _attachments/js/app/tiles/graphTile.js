@@ -34,7 +34,7 @@ GraphTile = Class.create(Tile,{
 	vAddSerie : function(a_oObservable,a_oSerieOptions,a_oOptions){
 		this.aSeries.push(a_oSerieOptions);
 		this.oSeries[a_oSerieOptions.name] = a_oSerieOptions;
-		this.zipped = this.zipped.zip(a_oObservable,function(currentData,newData){
+		this.zipped = this.zipped.combinelatest(a_oObservable,function(currentData,newData){
 			currentData.push({serie:a_oSerieOptions.name,data:newData});
 			return currentData;
 		});
