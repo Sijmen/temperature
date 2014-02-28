@@ -31,7 +31,8 @@ port = str(databaseSettings["port"])
 user = str(databaseSettings["user"])
 password = str(databaseSettings["password"])
 dbname = str(databaseSettings["name"])
-print dbname
+# print dbname
+print databaseSettings
 couch = couchdb.Server('http://%s:%s' % (host, port))
 couch.resource.credentials = (user, password)
 db = couch[dbname]
