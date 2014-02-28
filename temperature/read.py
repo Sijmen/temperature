@@ -31,15 +31,14 @@ port = str(databaseSettings["port"])
 user = str(databaseSettings["user"])
 password = str(databaseSettings["password"])
 dbname = str(databaseSettings["name"])
-# print dbname
-print databaseSettings
+
 couch = couchdb.Server('http://%s:%s' % (host, port))
-couch.resource.credentials = (user, password)
+if user and password:
+	couch.resource.credentials = (user, password)
 db = couch[dbname]
 settings = None
 if 'settings_temperature' in db:
 	settings = db['settings_temperature']
-	print settings
 if 'settings_temperature.default' in db:
 	settings_default = db['settings_temperature.default']
 	if settings is not None:
