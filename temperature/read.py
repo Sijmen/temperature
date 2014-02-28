@@ -8,6 +8,7 @@ import threading
 
 # if os.path.dirname(sys.argv[0]):
 #	os.chdir(os.path.dirname(sys.argv[0]))
+databaseSettings = None
 if(os.path.isfile("../db_settings.json")):
 	databaseSettings = json.load(open("../db_settings.json"))
 if (os.path.isfile("../db_settings.default.json")):
@@ -25,8 +26,6 @@ if not os.path.isfile("../db_settings.json") and not os.path.isfile("../db_setti
 # just overrides the entire sub dict.
 # does not seem to do recusive, see https://stackoverflow.com/questions/3232943
 
-print databaseSettings
-
 host = str(databaseSettings["host"])
 port = str(databaseSettings["port"])
 user = str(databaseSettings["user"])
@@ -36,6 +35,7 @@ print dbname
 couch = couchdb.Server('http://%s:%s' % (host, port))
 couch.resource.credentials = (user, password)
 db = couch[dbname]
+settings = None
 if 'settings_temperature' in db:
 	settings = db['settings_temperature']
 	print settings
