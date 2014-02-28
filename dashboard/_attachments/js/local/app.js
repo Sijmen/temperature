@@ -75,7 +75,7 @@ var graph2 = new GraphTile('#graph2',viewTemperature_60m.map(mapTemp),{
 	}
 });
 graph2.vSetSmooth(4);
-graph2.vAddSerie(viewHumidity_60m.concat(humidityStream).map(mapHum),{name:"Humidity",data:[],color:'#9c4274',renderer:'line'});
+// graph2.vAddSerie(viewHumidity_60m.concat(humidityStream).map(mapHum),{name:"Humidity",data:[],color:'#9c4274',renderer:'line'});
 graph2.vRender();
 var number = new LiveKnobNumberTile('#number1',temperatureStream.map(function(doc){return doc.temperature;}),{name:"Laatste waarde",max:30,step:0.5});
 number.vSetPostText(' &deg;C');
