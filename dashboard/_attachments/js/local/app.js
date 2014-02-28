@@ -15,7 +15,7 @@ var range60minutes = {
 
 var baseOptions = {
 	view:'time',
-	designDoc:"temperature"
+	designDoc:"dashboard"
 };
 var baseOptions24h = $.extend({range:range24hours},baseOptions);
 var baseOptions60m = $.extend({range:range60minutes},baseOptions);
