@@ -1,5 +1,8 @@
 .rickshaw_graph{
 }
+.rickshaw_graph .x_tick{
+	border-left:	0;
+}
 .block_title{
     color: rgba(255,255,255,0.4);
 }
