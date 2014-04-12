@@ -1,0 +1,7 @@
+DEBUG = true;
+POST_TIMEOUT = 1000;
+DB = 'temperature';
+STATE_DOC_ID = 'state';
+DESIRED_MIN_TEMP = 4.5;
+DESIRED_MAX_TEMP = 30;
+DESIRED_STEP = 0.5;

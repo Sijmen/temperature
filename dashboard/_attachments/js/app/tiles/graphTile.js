@@ -1,6 +1,7 @@
-GraphTile = Class.create(Tile,{
+ GraphTile = Class.create(Tile,{
 	initialize : function($super,a_sSelector,a_oObservable,a_oOptions){
 		var $this = this;
+		this.independentSeries = [];
 		$super(a_sSelector,a_oOptions);
 		// this.oGraph = {};
 		this.oOptions = $.extend(true,{
@@ -34,11 +35,22 @@ GraphTile = Class.create(Tile,{
 	vAddSerie : function(a_oObservable,a_oSerieOptions,a_oOptions){
 		this.aSeries.push(a_oSerieOptions);
 		this.oSeries[a_oSerieOptions.name] = a_oSerieOptions;
-		this.zipped = this.zipped.combineLatest(a_oObservable,function(currentData,newData){
+		console.log(this.zipped);
+		this.zipped = this.zipped.zip(a_oObservable,function(currentData,newData){
 			currentData.push({serie:a_oSerieOptions.name,data:newData});
 			return currentData;
 		});
 
+	},
+	addIndependentSerie : function(observable, serieOptions, options){
+		console.log(observable);
+		console.log(serieOptions);
+		console.log(options);
+		this.aSeries.push(serieOptions);
+		this.oSeries[serieOptions.name] = serieOptions;
+		this.independentSeries.push(observable.map(function(data) {
+			return {data:data,serie:serieOptions.name};
+		}));
 	},
 
 	vRender : function($super){
@@ -48,6 +60,14 @@ GraphTile = Class.create(Tile,{
 				//put data in array for rendering
 				Rx.Observable.fromArray(data).subscribe(function(serieData){
 					$this.vAddData(serieData.data,$this.oSeries[serieData.serie]);
+				});
+			});
+			Rx.Observable.fromArray(this.independentSeries).subscribe(function(independentSerie){
+				independentSerie.subscribe(function(independentSerieData) {
+					$this.vAddData(
+						independentSerieData.data,
+						$this.oSeries[independentSerieData.serie]
+					);
 				});
 			});
 		}

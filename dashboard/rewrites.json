@@ -29,6 +29,10 @@
     "to": "*"
   },
   {
+    "from": "/update/*",
+    "to": "/_update/update/*"
+  },
+  {
     "from": "",
     "to": "index.html"
   },
