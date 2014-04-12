@@ -11,17 +11,51 @@
 	</head>
 	<body class="grey">
 		<div class="container">
+
 			<div class="row">
-				<div class="col-md-12"><div class="orange dash_block"><div id="graph"></div></div></div>
-				<div class="col-md-8"><div class="bright-orange dash_block"><div id="graph2"></div></div></div>
-				<div class="col-md-4"><div class="purple dash_block"><div id="number1"></div></div></div>
-				<div class="col-md-4"><div class="purple dash_block"><div id="indexing"></div></div></div>
+				<div class="col-md-3"><div class="purple dash_block"><div id="number1"></div></div></div>
+				<div class="col-md-3"><div class="purple dash_block"><div id="number2"></div></div></div>
+				<div class="col-md-3"><div class="purple dash_block"><div id="desiredTemperature"></div></div></div>
+				<div class="col-md-3"><div class="purple dash_block"><div id="indexing"></div></div></div>
+			</div>
+			<div class="row">
+				<div class="col-md-7">
+					<div class="orange dash_block">
+						<div id="graph"></div>
+					</div>
+				</div>
+				<div class="col-md-5">
+					<div class="bright-orange dash_block">
+						<div id="graph2"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-7">
+					<div class="orange dash_block">
+						<div id="graph3"></div>
+					</div>
+				</div>
+				<div class="col-md-5">
+					<div class="bright-orange dash_block">
+						<div id="graph4"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="purple dash_block">
+						<div id="graph5"></div>
+					</div>
+				</div>
 			</div>
 		</div>
 		<script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
 		<script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 	    <script type="text/javascript" src="libs/couch/jquery.couch.js"></script>
 		<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+		<script type="text/javascript" src="js/local/constants.js"></script>
+		<script type="text/javascript" src="js/local/debug_console.js"></script>
 		<script type="text/javascript" src="libs/rickshaw/rickshaw.min.js"></script>
 		<script type="text/javascript" src="libs/knob/jquery.knob.js"></script>
 		<script type="text/javascript" src="libs/rxjs/rx.js"></script>
@@ -36,5 +70,6 @@
 		<script type="text/javascript" src="js/app/dataProviders/couchDBDataProvider.js"></script>
 		<script type="text/javascript" src="js/app/dataProviders/activeTaskDataProvider.js"></script>
 		<script type="text/javascript" src="js/local/app.js"></script>
+		<script type="text/javascript" src="js/local/therm.js"></script>
 	</body>
 </html>
