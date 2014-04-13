@@ -85,7 +85,7 @@ LoginTile= Class.create(Tile,{
 
       },
       error: function(status, error, reason) {
-        $this.showError('<strong>('+status+')</strong>: '+reason);
+        $this.showError('<strong>'+reason+'</strong>');
       }
     });
   },
