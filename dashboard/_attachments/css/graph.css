@@ -2,6 +2,7 @@
 }
 .block_title{
     color: rgba(255,255,255,0.4);
+    padding: 25px 0;
 }
 .last_update{
 	position: 	absolute;
