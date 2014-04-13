@@ -11,12 +11,24 @@
 	</head>
 	<body class="grey">
 		<div class="container">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="orange dash_block">
+						<div id="login"></div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="purple dash_block">
+						<div id="indexing"></div>
+					</div>
+				</div>
+			</div>
 
 			<div class="row">
-				<div class="col-md-3"><div class="purple dash_block"><div id="number1"></div></div></div>
-				<div class="col-md-3"><div class="purple dash_block"><div id="number2"></div></div></div>
-				<div class="col-md-3"><div class="purple dash_block"><div id="desiredTemperature"></div></div></div>
-				<div class="col-md-3"><div class="purple dash_block"><div id="indexing"></div></div></div>
+				<div class="col-md-4"><div class="purple dash_block"><div id="number1"></div></div></div>
+				<div class="col-md-4"><div class="purple dash_block"><div id="desiredTemperature"></div></div></div>
+				<div class="col-md-4"><div class="purple dash_block"><div id="number2"></div></div></div>
+
 			</div>
 			<div class="row">
 				<div class="col-md-7">
@@ -64,7 +76,8 @@
 		<script type="text/javascript" src="libs/rxjs/rx.binding.js"></script>
 		<script type="text/javascript" src="js/app/tiles/Tile.js"></script>
 		<script type="text/javascript" src="js/app/tiles/graphTile.js"></script>
-		<script type="text/javascript" src="js/app/tiles/numberTile.js"></script>
+    <script type="text/javascript" src="js/app/tiles/numberTile.js"></script>
+		<script type="text/javascript" src="js/app/tiles/loginTile.js"></script>
 		<script type="text/javascript" src="js/app/tiles/liveNumberTile.js"></script>
 		<script type="text/javascript" src="js/app/tiles/knobNumberTile.js"></script>
 		<script type="text/javascript" src="js/app/dataProviders/couchDBDataProvider.js"></script>

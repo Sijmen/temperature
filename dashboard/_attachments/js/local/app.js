@@ -198,16 +198,16 @@ var graph = new GraphTile('#graph',viewTemperature_24h.concat(temperatureStream)
 	graphOptions: graphOptions
 });
 
-graph.addIndependentSerie(
-	viewDesired_24h.concat(
-		desiredTemperatureStream
-	).map(mapDesiredTemp),{
-		name : 'Gewenste Temperatuur',
-		data : [],
-		color : '#610B0B',
-		renderer: 'line',
-	}
-);
+// graph.addIndependentSerie(
+// 	viewDesired_24h.concat(
+// 		desiredTemperatureStream
+// 	).map(mapDesiredTemp),{
+// 		name : 'Gewenste Temperatuur',
+// 		data : [],
+// 		color : '#610B0B',
+// 		renderer: 'line',
+// 	}
+// );
 
 // graph.addIndependentSerie(viewThermActive_24h.concat(activeThermStream).map(mapThermActive),{
 // 	name : 'Thermostaat vragend',
@@ -233,16 +233,16 @@ var graph2 = new GraphTile('#graph2',viewTemperature_60m.concat(temperatureStrea
 	graphOptions: graphOptions
 });
 
-graph2.addIndependentSerie(
-	viewDesired_60m.concat(
-		desiredTemperatureStream
-	).map(mapDesiredTemp),{
-		name : 'Gewenste Temperatuur',
-		data : [],
-		color : '#610B0B',
-		renderer: 'line'
-	}
-);
+// graph2.addIndependentSerie(
+// 	viewDesired_60m.concat(
+// 		desiredTemperatureStream
+// 	).map(mapDesiredTemp),{
+// 		name : 'Gewenste Temperatuur',
+// 		data : [],
+// 		color : '#610B0B',
+// 		renderer: 'line'
+// 	}
+// );
 
 // graph2.addIndependentSerie(viewThermActive_60m.concat(activeThermStream).map(mapThermActive),{
 // 	name : 'Thermostaat vragend',
@@ -341,3 +341,8 @@ var index = new LiveKnobNumberTile('#indexing',ActiveTasksDataProvider.map(funct
 	name:"Indexing"
 });
 index.vSetPostText(' %');
+
+var loginTile = new LoginTile('#login',{
+	name: 'Login',
+	welcomeText: 'Hello %name%',
+});
