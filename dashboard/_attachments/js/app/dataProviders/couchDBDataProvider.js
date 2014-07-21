@@ -49,28 +49,36 @@ Rx.Observable.fromCouchDB = function (couchDB) {
 };
 
 Rx.Observable.fromCouchDBView = function(couchDB,options){
-			//call super for sanity checks on a_oRange
-		var $this = this;
-		// console.log(this.oOptions);
-		if(!options)
-			throw "options must be given, no default available";
-		var observable = Rx.Observable.create(function (observer) {
-			couchDB.view(options.designDoc + "/"+options.view, {
-				startkey:[options.device,options.range.min],
-				endkey:[options.device,options.range.max],
-				reduce:false,
-				update_seq : true,
-				// include_docs : true,
-				success : function(data) {
-					$.each(data.rows,function(index,couchIndex){
-						observer.onNext(couchIndex.value);
-					});
-					observer.onCompleted();
-				},
-				error : function(data){
-					observer.onError(data);
-				}
-			});
+	//call super for sanity checks on a_oRange
+	var $this = this;
+	// console.log(this.oOptions);
+	if(!options)
+		throw "options must be given, no default available";
+	var observable = Rx.Observable.create(function (observer) {
+		baseCouchOptions = {
+			reduce:false,
+			update_seq : true,
+			success : function(data) {
+				$.each(data.rows,function(index,couchIndex){
+					myRet = couchIndex.value;
+					myRet._id = couchIndex.id;
+					myRet.timestamp = couchIndex.key[1];
+					observer.onNext(myRet);
+				});
+				observer.onCompleted();
+			},
+			error : function(data){
+				observer.onError(data);
+			}
+		};
+		if (options.device && options.range) {
+			baseCouchOptions.startkey = [options.device,options.range.min];
+			baseCouchOptions.endkey = [options.device,options.range.max];
+		}
+		couchDB.view(
+			options.designDoc + "/"+options.view,
+			$.extend(true,baseCouchOptions,options)
+		);
 
 
 		// Any cleanup logic might go here
