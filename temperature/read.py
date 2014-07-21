@@ -8,17 +8,18 @@ import threading
 
 # if os.path.dirname(sys.argv[0]):
 #	os.chdir(os.path.dirname(sys.argv[0]))
+mypath = os.path.dirname(os.path.realpath(__file__))+"/"
 databaseSettings = None
-if(os.path.isfile("../db_settings.json")):
-	databaseSettings = json.load(open("../db_settings.json"))
-if (os.path.isfile("../db_settings.default.json")):
-	databaseSettings_default = json.load(open("../db_settings.default.json"))
+if(os.path.isfile(mypath+"../db_settings.json")):
+	databaseSettings = json.load(open(mypath+"../db_settings.json"))
+if (os.path.isfile(mypath+"../db_settings.default.json")):
+	databaseSettings_default = json.load(open(mypath+"../db_settings.default.json"))
 	if databaseSettings is not None:
 		databaseSettings = dict(databaseSettings_default.items() + databaseSettings.items())
 	else:
 		databaseSettings = databaseSettings_default
 
-if not os.path.isfile("../db_settings.json") and not os.path.isfile("../db_settings.default.json"):
+if not os.path.isfile(mypath+"../db_settings.json") and not os.path.isfile(mypath+"../db_settings.default.json"):
 	raise Except('No dabase settings file found. You should have a db_settings.default.json and/or a db_settings.json in the root folder.')
 
 # Merge default settings with user settings. Reduces the need to completely copy

@@ -55,7 +55,12 @@ var graph = new GraphTile('#graph',viewTemperature_24h.concat(temperatureStream)
 });
 // viewHumidty_24h.concat(humidityStream).map(mapHum).subscribe(function(data){console.log(data);});
 // viewTemperature_24h.concat(temperatureStream).map(mapTemp).subscribe(function(data){console.log(data);});
-// graph.vAddSerie(viewHumidity_24h.concat(humidityStream).map(mapHum),{name:"Humidity",data:[],color:'#9c4274'});
+graph.vAddIndependentSerie(viewHumidity_24h.concat(humidityStream).map(mapHum),{
+  name:"Humidity",
+  data:[],
+  color:'#9c4274',
+  renderer: 'line'
+});
 graph.vSetSmooth(12);
 graph.vRender();
 
