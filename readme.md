@@ -1,8 +1,11 @@
 # Temperature reading Raspberry Pi
 ##Requirements
  * Couchdb installed
+ * CURL installed
  * basic knowledge of Couchdb
  * Python lib to access couchdb `sudo pip install couchdb`
+ * Python lib pycurl `sudo pip install pycurl`
+
  * and DS18B20
 
 ##Usage
